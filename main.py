@@ -493,7 +493,7 @@ def train(word_data, EPOCHS, N_ANCH, alpha_mul, alpha_pow):
             back = False
             n_batch = 0
             pos, neg, probs = word_data[word]
-            probs = probs.cuda()
+            probs = probs.cpu()
             for i in range(probs.shape[1]):
                 if i not in pos or i not in neg:
                     continue
