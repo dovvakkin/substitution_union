@@ -546,26 +546,26 @@ def train(word_data, EPOCHS, N_ANCH, alpha_mul, alpha_pow):
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 substs_list = [
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask>-и-T-2ltr1f_topk150_fixspacesTrue.npz',
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask>-2ltr2f_topk150_fixspacesTrue.npz',
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask>-или-T-2ltr2f_topk150_fixspacesTrue.npz',
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask>-2ltr2f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask>-и-T-2ltr1f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask>-2ltr2f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask>-или-T-2ltr2f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask>-2ltr2f_topk150_fixspacesTrue.npz',
 
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask>-и-T-2ltr2f_topk150_fixspacesTrue.npz',
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask><mask>-2ltr2f_topk150_fixspacesTrue.npz',
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask>-или-T-2ltr2f_topk150_fixspacesTrue.npz',
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask><mask>-2ltr2f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask>-и-T-2ltr2f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask><mask>-2ltr2f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask>-или-T-2ltr2f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask><mask>-2ltr2f_topk150_fixspacesTrue.npz',
 
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask><mask>-и-T-2ltr3f_topk150_fixspacesTrue.npz',
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask><mask><mask>-2ltr3f_topk150_fixspacesTrue.npz',
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask><mask>-или-T-2ltr3f_topk150_fixspacesTrue.npz',
-    '~/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask><mask><mask>-2ltr3f_topk150_fixspacesTrue.npz'
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask><mask>-и-T-2ltr3f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask><mask><mask>-2ltr3f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask><mask>-или-T-2ltr3f_topk150_fixspacesTrue.npz',
+    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask><mask><mask>-2ltr3f_topk150_fixspacesTrue.npz'
 ]
 
 un_pairs = [(0,1), (2,3), (4,5), (6,7), (8,9), (10,11)]
 # un_pairs = []
 
-data_name = '~/russe-wsi-kit/data/main/bts-rnc/traincsv'
+data_name = '/home/y.kozhevnikov/russe-wsi-kit/data/main/bts-rnc/traincsv'
 topk = 200
 min_df = 0.05
 max_df = 0.98
