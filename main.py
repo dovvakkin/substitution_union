@@ -265,7 +265,7 @@ class Substs_loader:
                self.get_substitutes(path2, topk=topk, data_name=self.data_name + '_2' )
 
 
- def get_vocab(df):
+def get_vocab(df):
     ws = set()
     for context in df['context']:
         df1 = df[df['context'] == context]
