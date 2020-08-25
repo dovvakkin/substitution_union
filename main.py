@@ -460,7 +460,7 @@ def balance_pos_neg(positives, negatives, npos,nneg):
 
     return torch.tensor(_pos), torch.tensor(_neg)
 
-def train(word_data, EPOCHS, N_ANCH, alpha_mul, alpha_pow):
+def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per,  alpha_mul, alpha_pow):
     device = torch.device("cpu")
 
     N_TEMPL = 18
@@ -504,8 +504,8 @@ def train(word_data, EPOCHS, N_ANCH, alpha_mul, alpha_pow):
                     # poses,negs = balance_pos_neg(_pos, _neg, N_ANCH, 5)
                     # for pos, neg in zip([probs, _pos[:N_ANCH]],[_neg[:N_ANCH]]):
                     #     # print(len(pos),len(neg))
-                    npos = min(len(pos[i]), 20)
-                    __pos, __neg = balance_pos_neg(pos[i], neg[i], npos, 2)
+                    npos = min(len(pos[i]), n_rand)
+                    __pos, __neg = balance_pos_neg(pos[i], neg[i], npos, n_neg_per)
                     # __pos, __neg = torch.tensor([]), torch.tensor([])
                     LEN = min(len(_pos), len(_neg), N_ANCH)
                     if not back:
@@ -625,4 +625,4 @@ train_set = ['лавка', 'лайка', 'лев', 'лира', 'мина', 'ми
 
 train_words = {key : new_data[key] for key in train_set}
 
-params = train(train_words, 20, 15, 0.001, 0.0001)
+params = train(train_words, 20, 15, 20, 2, 0.001, 0.0001)
