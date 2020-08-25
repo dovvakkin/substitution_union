@@ -479,7 +479,15 @@ def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per,  alpha_mul, alpha_pow):
     # optimizer = optim.SGD([params], lr=alpha)
     optimizer_mul = optim.SGD([params_mul], lr=alpha_mul)
     optimizer_power = optim.SGD([params_power], lr=alpha_pow)
+    
+    name = "{}_{}_{}_{}_{}".format(N_ANCH, n_rand, n_neg_per, alpha_mul, alpha_pow)
+    os.mkdir('/home/y.kozhevnikov/run/{}'.format(name))
 
+    __loss = list()
+    __left = list()
+    __right = list()
+    __tensors_mul = list()
+    __tensors_pow = list()
     for epoch in range(EPOCHS):
         
         count = 0
@@ -540,8 +548,30 @@ def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per,  alpha_mul, alpha_pow):
         # print(torch.sum(params_mul.clone().detach()))
         # print(torch.sum(params.clone().detach()))
         # print(torch.sum(params.clone().detach()))
+
+        __left.append(all_left / count)
+        __right.append(all_right / count)
+        __loss.append(all_loss / count)
+        __tensors_pow.append(params_power.clone().detach())
+        __tensors_mul.append(params_mul.clone().detach())
         print('triplet_loss:\t{}\t{}\t{}'.format(all_left/count,all_right/count,all_loss / count))
-    return params
+
+    with open("/home/y.kozhevnikov/run/{}/left.txt".format(name), 'w') as f:
+        for l in __left:
+            f.write("{}\n".format(l))
+    with open("/home/y.kozhevnikov/run/{}/right.txt".format(name), 'w') as f:
+        for r in __right:
+            f.write("{}\n".format(r))
+    with open("/home/y.kozhevnikov/run/{}/loss.txt".format(name), 'w') as f:
+        for l in __loss:
+            f.write("{}\n".format(l))
+
+
+    for n, t in enumerate(__tensors_mul):
+        torch.save(t, "/home/y.kozhevnikov/run/{}/mul_{}.pt".format(name, n))
+    for n, t in enumerate(__tensors_pow):
+        torch.save(t, "/home/y.kozhevnikov/run/{}/pow_{}.pt".format(name, n))
+    return params_mul, params_power
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -625,4 +655,8 @@ train_set = ['лавка', 'лайка', 'лев', 'лира', 'мина', 'ми
 
 train_words = {key : new_data[key] for key in train_set}
 
-params = train(train_words, 20, 15, 20, 2, 0.001, 0.0001)
+for epoch in [5]:
+    for n_anch in [0, 15]:
+        for n_rand in [10, 20]:
+            for n_neg_per in [2]:
+                params = train(train_words, epoch, n_anch, n_rand, n_neg_per, 0.001, 0.0001)
