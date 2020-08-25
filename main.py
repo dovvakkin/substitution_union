@@ -655,8 +655,8 @@ train_set = ['лавка', 'лайка', 'лев', 'лира', 'мина', 'ми
 
 train_words = {key : new_data[key] for key in train_set}
 
-for epoch in [5]:
-    for n_anch in [0, 15]:
-        for n_rand in [10, 20]:
+for epoch in [19]:
+    for n_anch in [0, 7, 15]:
+        for n_rand in [10, 20, 30]:
             for n_neg_per in [2]:
                 params = train(train_words, epoch, n_anch, n_rand, n_neg_per, 0.001, 0.0001)
