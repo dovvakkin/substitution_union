@@ -340,7 +340,7 @@ def get_pos_neg_from_gold(golds):
 #       right.item(),\
 #       left - right #+ 0.05 * torch.sum(params ** 2)
 
-def get_triplet_loss(probs, cur_ind, pos_inds, neg_inds, params_mul, params_power):
+def get_triplet_loss(probs, cur_ind, pos_inds, neg_inds, params_mul, params_power, alpha):
     all_cur = probs[:, [cur_ind], :]
     all_pos = probs[:, pos_inds, :]
     all_neg = probs[:, neg_inds, :]
@@ -364,7 +364,7 @@ def get_triplet_loss(probs, cur_ind, pos_inds, neg_inds, params_mul, params_powe
     # print(((((all_cur - all_pos)* params).sum(0)) ** 2).shape)
     # print(right.item())
     
-    dif = left - right + 0.7
+    dif = left - right + alpha
     dif[dif < 0] = 0
 
     return left.item(),\
@@ -460,7 +460,7 @@ def balance_pos_neg(positives, negatives, npos,nneg):
 
     return torch.tensor(_pos), torch.tensor(_neg)
 
-def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per,  alpha_mul, alpha_pow):
+def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per, triplet_alpha, alpha_mul, alpha_pow):
     device = torch.device("cpu")
 
     N_TEMPL = 18
@@ -518,11 +518,11 @@ def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per,  alpha_mul, alpha_pow):
                     LEN = min(len(_pos), len(_neg), N_ANCH)
                     if not back:
                         back = True
-                        left,right,loss = get_triplet_loss(probs, i, torch.cat([_pos[:LEN], __pos]), torch.cat([_neg[:LEN], __neg]), params_mul, params_power)
+                        left,right,loss = get_triplet_loss(probs, i, torch.cat([_pos[:LEN], __pos]), torch.cat([_neg[:LEN], __neg]), params_mul, params_power, triplet_alpha)
                         # left,right,loss = get_triplet_loss(probs, i, _pos[:LEN], _neg[:LEN], params)
                     else:
                         # l,r,lo = get_triplet_loss(probs, i, _pos[:LEN], _neg[:LEN], params)
-                        l,r,lo = get_triplet_loss(probs, i, torch.cat([_pos[:LEN], __pos]), torch.cat([_neg[:LEN], __neg]), params_mul, params_power)
+                        l,r,lo = get_triplet_loss(probs, i, torch.cat([_pos[:LEN], __pos]), torch.cat([_neg[:LEN], __neg]), params_mul, params_power, triplet_alpha)
                         left += l
                         right += r
                         loss += lo
@@ -659,4 +659,5 @@ for epoch in [19]:
     for n_anch in [0, 7, 15]:
         for n_rand in [10, 20, 30]:
             for n_neg_per in [2]:
-                params = train(train_words, epoch, n_anch, n_rand, n_neg_per, 0.001, 0.0001)
+                for triplet_alpha in [0.3, 0.5, 0.7]:
+                    params = train(train_words, epoch, n_anch, n_rand, n_neg_per, triplet_alpha, 0.001, 0.0001)
