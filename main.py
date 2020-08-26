@@ -480,7 +480,7 @@ def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per, triplet_alpha, alpha_mul
     optimizer_mul = optim.SGD([params_mul], lr=alpha_mul)
     optimizer_power = optim.SGD([params_power], lr=alpha_pow)
     
-    name = "{}_{}_{}_{}_{}".format(N_ANCH, n_rand, n_neg_per, alpha_mul, alpha_pow)
+    name = "{}_{}_{}_{}_{}_{}".format(N_ANCH, n_rand, n_neg_per, triplet_alpha, alpha_mul, alpha_pow)
     os.mkdir('/home/y.kozhevnikov/run/{}'.format(name))
 
     __loss = list()
