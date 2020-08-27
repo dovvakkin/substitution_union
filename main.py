@@ -658,6 +658,6 @@ train_words = {key : new_data[key] for key in train_set}
 for epoch in [19]:
     for n_anch in [0, 7, 15]:
         for n_rand in [10, 20, 30]:
-            for n_neg_per in [2]:
+            for n_neg_per in [1]:
                 for triplet_alpha in [0.3, 0.5, 0.7]:
                     params = train(train_words, epoch, n_anch, n_rand, n_neg_per, triplet_alpha, 0.001, 0.0001)
