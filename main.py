@@ -580,19 +580,25 @@ substs_list = [
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask>-2ltr2f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask>-или-T-2ltr2f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask>-2ltr2f_topk150_fixspacesTrue.npz',
+    '<mask>-(а-также-T)-2ltr1f_topk150_fixspacesTrue.npz',
+    'T-(а-также-<mask>)-2ltr1f_topk150_fixspacesTrue.npz',
 
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask>-и-T-2ltr2f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask><mask>-2ltr2f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask>-или-T-2ltr2f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask><mask>-2ltr2f_topk150_fixspacesTrue.npz',
+    '<mask><mask>-(а-также-T)-2ltr2f_topk150_fixspacesTrue.npz',
+    'T-(а-также-<mask><mask>)-2ltr2f_topk150_fixspacesTrue.npz',
 
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask><mask>-и-T-2ltr3f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask><mask><mask>-2ltr3f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask><mask>-или-T-2ltr3f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask><mask><mask>-2ltr3f_topk150_fixspacesTrue.npz'
+    '<mask><mask><mask>-(а-также-T)-2ltr3f_topk150_fixspacesTrue.npz',
+    'T-(а-также-<mask><mask><mask>)-2ltr3f_topk150_fixspacesTrue.npz'
 ]
 
-un_pairs = [(0,1), (2,3), (4,5), (6,7), (8,9), (10,11)]
+un_pairs = [(0,1), (2,3), (4,5), (6,7), (8,9), (10,11), (12, 13), (14, 15), (16, 17)]
 # un_pairs = []
 
 data_name = '/home/y.kozhevnikov/russe-wsi-kit/data/main/bts-rnc/traincsv'
@@ -658,6 +664,6 @@ train_words = {key : new_data[key] for key in train_set}
 for epoch in [19]:
     for n_anch in [0, 7, 15]:
         for n_rand in [10, 20, 30]:
-            for n_neg_per in [1]:
+            for n_neg_per in [2]:
                 for triplet_alpha in [0.3, 0.5, 0.7]:
                     params = train(train_words, epoch, n_anch, n_rand, n_neg_per, triplet_alpha, 0.001, 0.0001)
