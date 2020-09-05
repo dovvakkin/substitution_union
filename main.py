@@ -463,7 +463,7 @@ def balance_pos_neg(positives, negatives, npos,nneg):
 def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per, triplet_alpha, alpha_mul, alpha_pow):
     device = torch.device("cpu")
 
-    N_TEMPL = 18
+    N_TEMPL = 27
     
     params_power = torch.FloatTensor(N_TEMPL,1,1).uniform_(1, 1)
     params_power = torch.tensor(params_power, device=device, requires_grad=True)
