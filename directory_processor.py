@@ -729,7 +729,7 @@ test = ['балка', 'вид', 'винт', 'горн', 'губа', 'жаба', 
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('path', type=str)
+parser.add_argument('--path', type=str)
 
 args = parser.parse_args()
 
