@@ -604,26 +604,25 @@ for substitutes_dump in substs_list:
         vec = TfidfVectorizer(token_pattern=r"(?u)\b\w+\b", min_df=min_df, max_df=max_df, vocabulary=per_word_vocab[word])
         mask = (df.word == word)
         golds = df[mask]['gold_sense_id'].tolist()
-        pos, neg = get_pos_neg_from_gold(golds)
         vectors = vec.fit_transform(substs_texts[mask]).toarray()
         if word not in data:
             data[word] = dict()
-        data[word][substitutes_dump] = pos, neg, vectors
+        data[word][substitutes_dump] = golds, vectors
 
 for word in data:
     for pair in un_pairs:
         f,s = pair
-        union = data[word][substs_list[f]][2] * data[word][substs_list[s]][2]
-        pos, neg, _ = data[word][substs_list[f]]
-        data[word][substs_list[f] + '_' + substs_list[s]] = pos, neg, union
+        union = data[word][substs_list[f]][1] * data[word][substs_list[s]][1]
+        golds, _ = data[word][substs_list[f]]
+        data[word][substs_list[f] + '_' + substs_list[s]] = golds, union
 
 new_data = dict()
 
 for word in data:
-    vec_list = list([torch.FloatTensor(data[word][k][2]) for k in data[word]])
+    vec_list = list([torch.FloatTensor(data[word][k][1]) for k in data[word]])
     vec_tensor = torch.stack(vec_list)
-    pos, neg, _ = data[word][next(iter(data[word]))]
-    new_data[word] = pos, neg, vec_tensor
+    golds, _ = data[word][next(iter(data[word]))]
+    new_data[word] = golds, vec_tensor
 
 
 train_set = ['лавка', 'лайка', 'лев', 'лира', 'мина', 'мишень', 'обед', 'оклад', 'опушка', 'полис'] #, 'лавка', 'лайка', 'лев', 'лира', 'мина'
