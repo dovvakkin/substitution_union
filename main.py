@@ -463,7 +463,7 @@ def balance_pos_neg(positives, negatives, npos,nneg):
 def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per, triplet_alpha, alpha_mul, alpha_pow):
     device = torch.device("cpu")
 
-    N_TEMPL = 27
+    N_TEMPL = 9
     
     params_power = torch.FloatTensor(N_TEMPL,1,1).uniform_(1, 1)
     params_power = torch.tensor(params_power, device=device, requires_grad=True)
@@ -481,7 +481,7 @@ def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per, triplet_alpha, alpha_mul
     optimizer_power = optim.SGD([params_power], lr=alpha_pow)
     
     name = "{}_{}_{}_{}_{}_{}".format(N_ANCH, n_rand, n_neg_per, triplet_alpha, alpha_mul, alpha_pow)
-    os.mkdir('/home/y.kozhevnikov/run/{}'.format(name))
+    os.mkdir('/home/y.kozhevnikov/run_tak/{}'.format(name))
 
     __loss = list()
     __left = list()
@@ -556,49 +556,37 @@ def train(word_data, EPOCHS, N_ANCH, n_rand, n_neg_per, triplet_alpha, alpha_mul
         __tensors_mul.append(params_mul.clone().detach())
         print('triplet_loss:\t{}\t{}\t{}'.format(all_left/count,all_right/count,all_loss / count))
 
-    with open("/home/y.kozhevnikov/run/{}/left.txt".format(name), 'w') as f:
+    with open("/home/y.kozhevnikov/run_tak/{}/left.txt".format(name), 'w') as f:
         for l in __left:
             f.write("{}\n".format(l))
-    with open("/home/y.kozhevnikov/run/{}/right.txt".format(name), 'w') as f:
+    with open("/home/y.kozhevnikov/run_tak/{}/right.txt".format(name), 'w') as f:
         for r in __right:
             f.write("{}\n".format(r))
-    with open("/home/y.kozhevnikov/run/{}/loss.txt".format(name), 'w') as f:
+    with open("/home/y.kozhevnikov/run_tak/{}/loss.txt".format(name), 'w') as f:
         for l in __loss:
             f.write("{}\n".format(l))
 
 
     for n, t in enumerate(__tensors_mul):
-        torch.save(t, "/home/y.kozhevnikov/run/{}/mul_{}.pt".format(name, n))
+        torch.save(t, "/home/y.kozhevnikov/run_tak/{}/mul_{}.pt".format(name, n))
     for n, t in enumerate(__tensors_pow):
-        torch.save(t, "/home/y.kozhevnikov/run/{}/pow_{}.pt".format(name, n))
+        torch.save(t, "/home/y.kozhevnikov/run_tak/{}/pow_{}.pt".format(name, n))
     return params_mul, params_power
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 substs_list = [
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask>-и-T-2ltr1f_topk150_fixspacesTrue.npz',
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask>-2ltr2f_topk150_fixspacesTrue.npz',
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask>-или-T-2ltr2f_topk150_fixspacesTrue.npz',
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask>-2ltr2f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask>-(а-также-T)-2ltr1f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-(а-также-<mask>)-2ltr1f_topk150_fixspacesTrue.npz',
 
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask>-и-T-2ltr2f_topk150_fixspacesTrue.npz',
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask><mask>-2ltr2f_topk150_fixspacesTrue.npz',
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask>-или-T-2ltr2f_topk150_fixspacesTrue.npz',
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask><mask>-2ltr2f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask>-(а-также-T)-2ltr2f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-(а-также-<mask><mask>)-2ltr2f_topk150_fixspacesTrue.npz',
 
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask><mask>-и-T-2ltr3f_topk150_fixspacesTrue.npz',
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-и-<mask><mask><mask>-2ltr3f_topk150_fixspacesTrue.npz',
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask><mask>-или-T-2ltr3f_topk150_fixspacesTrue.npz',
-    '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-или-<mask><mask><mask>-2ltr3f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/<mask><mask><mask>-(а-также-T)-2ltr3f_topk150_fixspacesTrue.npz',
     '/home/y.kozhevnikov/bts-rnc/russe_bts-rnc/train_1-limitNone-maxexperwordNone/modelNone/T-(а-также-<mask><mask><mask>)-2ltr3f_topk150_fixspacesTrue.npz'
 ]
 
-un_pairs = [(0,1), (2,3), (4,5), (6,7), (8,9), (10,11), (12, 13), (14, 15), (16, 17)]
+un_pairs = [(0,1), (2,3), (4,5)]
 # un_pairs = []
 
 data_name = '/home/y.kozhevnikov/russe-wsi-kit/data/main/bts-rnc/traincsv'
