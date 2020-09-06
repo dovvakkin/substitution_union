@@ -611,6 +611,8 @@ for substitutes_dump in substs_list:
         else:
             per_word_vocab[word].update(words)
 
+for word in per_word_vocab:
+    per_word_vocab[word] = {w:i for i, w in enumerate(per_word_vocab[word])}
 data = dict()
 
 for substitutes_dump in substs_list:
