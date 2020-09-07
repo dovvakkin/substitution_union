@@ -633,7 +633,7 @@ train_words = {key : new_data[key] for key in train_set}
 
 for epoch in [20]:
     for triplet_alpha in [0.2, 0.4, 0.6, 0.8]:
-        params = train(train_words, epoch, triplet_alpha, 'batch-hard', 0.007, 0.012)
-        params = train(train_words, epoch, triplet_alpha, 'all', 0.003, 0.007)
-        params = train(train_words, epoch, triplet_alpha, 'hard', 0.003, 0.007)
-        params = train(train_words, epoch, triplet_alpha, 'semihard', 0.003, 0.007)
+        params = train(train_words, epoch, triplet_alpha, 'batch-hard', 0.3, 1)
+        params = train(train_words, epoch, triplet_alpha, 'all', 0.3, 1)
+        params = train(train_words, epoch, triplet_alpha, 'hard', 0.3, 1)
+        params = train(train_words, epoch, triplet_alpha, 'semihard', 0.3, 1)
