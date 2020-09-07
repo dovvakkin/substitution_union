@@ -512,6 +512,8 @@ def train(data, epochs, triplet_alpha, miner, alpha_pow, alpha_mul):
     for epoch in range(epochs):
         epoch_losses = []
         for word in tqdm(data):
+            opt_mul.zero_grad()
+            opt_pow.zero_grad()
             golds, vectors = data[word]
             golds = torch.tensor(golds)
             vectors = vectors.to(device)
